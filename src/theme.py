@@ -15,6 +15,22 @@ CUSTOM_CSS = """
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #F1F5F9;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #94A3B8;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #64748B;
+    }
+
     /* Main App Background Gradient */
     .stApp {
         background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #F1F5F9 100%);
@@ -25,8 +41,14 @@ CUSTOM_CSS = """
         background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%) !important;
         border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
-    section[data-testid="stSidebar"] * {
+    section[data-testid="stSidebar"] p, 
+    section[data-testid="stSidebar"] span, 
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] {
         color: #E2E8F0 !important;
+    }
+    section[data-testid="stSidebar"] strong {
+        color: #FFFFFF !important;
     }
     section[data-testid="stSidebar"] .stMarkdown h3 {
         color: #60A5FA !important;
@@ -34,6 +56,38 @@ CUSTOM_CSS = """
     }
     section[data-testid="stSidebar"] hr {
         border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    /* Sidebar Code & Tag Badges - High Contrast Cyan on Dark */
+    section[data-testid="stSidebar"] code {
+        background-color: #0F172A !important;
+        color: #38BDF8 !important; /* Vivid Cyan Blue */
+        border: 1px solid #0284C7 !important;
+        border-radius: 6px !important;
+        padding: 3px 8px !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        display: inline-block !important;
+    }
+
+    /* Global Content Code Blocks */
+    code {
+        color: #1E40AF !important;
+        background-color: #EFF6FF !important;
+        border: 1px solid #BFDBFE !important;
+        padding: 2px 6px !important;
+        border-radius: 4px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Sidebar Info Alert Box */
+    section[data-testid="stSidebar"] div[data-testid="stAlert"] {
+        background-color: rgba(30, 58, 138, 0.45) !important;
+        border: 1px solid rgba(96, 165, 250, 0.4) !important;
+        border-radius: 10px !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stAlert"] * {
+        color: #DBEAFE !important;
     }
 
     /* Top Hero Banner */
@@ -69,13 +123,13 @@ CUSTOM_CSS = """
         padding: 1.3rem 1.4rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
         border: 1px solid #E2E8F0;
-        transition: all 0.25s ease-in-out;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
     }
     .kpi-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 20px -5px rgba(37, 99, 235, 0.15);
+        transform: translateY(-5px);
+        box-shadow: 0 16px 28px -6px rgba(37, 99, 235, 0.18), 0 0 10px rgba(96, 165, 250, 0.15);
         border-color: #93C5FD;
     }
     .kpi-card-blue { border-top: 4px solid #2563EB; }
@@ -129,12 +183,12 @@ CUSTOM_CSS = """
         margin-bottom: 1rem;
         border: 1px solid #E2E8F0;
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        transition: all 0.2s ease-in-out;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .course-card:hover {
         border-color: #3B82F6;
-        box-shadow: 0 8px 16px -4px rgba(59, 130, 246, 0.12);
-        transform: translateY(-2px);
+        box-shadow: 0 10px 22px -4px rgba(59, 130, 246, 0.16);
+        transform: translateY(-3px);
     }
     .match-tag {
         background: linear-gradient(135deg, #10B981, #059669);
@@ -144,6 +198,52 @@ CUSTOM_CSS = """
         border-radius: 6px;
         font-size: 0.78rem;
         letter-spacing: 0.02em;
+    }
+
+    /* Plotly Chart Card Containers */
+    div[data-testid="stPlotlyChart"] {
+        background: #FFFFFF !important;
+        border-radius: 14px !important;
+        padding: 12px !important;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.03) !important;
+        margin-bottom: 1rem !important;
+        transition: border-color 0.2s ease !important;
+    }
+    div[data-testid="stPlotlyChart"]:hover {
+        border-color: #CBD5E1 !important;
+    }
+
+    /* Dataframe & Table Styling */
+    div[data-testid="stDataFrame"] {
+        border-radius: 12px !important;
+        border: 1px solid #E2E8F0 !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+        background: #FFFFFF !important;
+    }
+
+    /* Streamlit Expander Styling */
+    div[data-testid="stExpander"] {
+        background: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+        margin-bottom: 1.2rem !important;
+    }
+    div[data-testid="stExpander"] summary {
+        font-weight: 600 !important;
+        color: #1E293B !important;
+    }
+
+    /* Input & Selectbox Styling */
+    div[data-baseweb="select"] > div {
+        border-radius: 8px !important;
+        border: 1px solid #CBD5E1 !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-baseweb="select"] > div:hover {
+        border-color: #3B82F6 !important;
     }
 
     /* Streamlit Tabs Modern Styling */
@@ -184,19 +284,35 @@ CUSTOM_CSS = """
         box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
     }
 
+    /* Download Buttons */
+    div.stDownloadButton > button {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25) !important;
+        transition: all 0.2s ease !important;
+    }
+    div.stDownloadButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 15px rgba(5, 150, 105, 0.35) !important;
+    }
+
     /* Streamlit Page Link Cards on Home Page */
     [data-testid="stPageLink-NavLink"] {
         background: #FFFFFF !important;
         border: 1px solid #E2E8F0 !important;
         border-radius: 10px !important;
-        padding: 10px 14px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+        padding: 12px 16px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.03) !important;
         transition: all 0.2s ease !important;
     }
     [data-testid="stPageLink-NavLink"]:hover {
         border-color: #3B82F6 !important;
         background: #EFF6FF !important;
         transform: translateY(-2px) !important;
+        box-shadow: 0 6px 12px rgba(59, 130, 246, 0.12) !important;
     }
 </style>
 """

@@ -41,11 +41,11 @@ def main():
         st.divider()
 
         st.markdown("**System Status**")
-        st.markdown(f"📦 Source: `{pipeline['loader'].data_source_type}`")
-        st.markdown(f"👥 Active Learners: **{len(pipeline['users']):,}**")
-        st.markdown(f"📚 Available Courses: **{len(pipeline['courses']):,}**")
-        st.markdown(f"📝 Total Enrollments: **{len(pipeline['transactions']):,}**")
-        st.markdown(f"🎯 Clusters Active: **{pipeline['segmenter'].k_clusters} Segments**")
+        st.markdown(f"📦 **Source:** <span style='color:#38BDF8; font-weight:700;'>{pipeline['loader'].data_source_type}</span>", unsafe_allow_html=True)
+        st.markdown(f"👥 **Active Learners:** <span style='color:#34D399; font-weight:700;'>{len(pipeline['users']):,}</span>", unsafe_allow_html=True)
+        st.markdown(f"📚 **Available Courses:** <span style='color:#A78BFA; font-weight:700;'>{len(pipeline['courses']):,}</span>", unsafe_allow_html=True)
+        st.markdown(f"📝 **Total Enrollments:** <span style='color:#FBBF24; font-weight:700;'>{len(pipeline['transactions']):,}</span>", unsafe_allow_html=True)
+        st.markdown(f"🎯 **Clusters Active:** <span style='color:#60A5FA; font-weight:700;'>{pipeline['segmenter'].k_clusters} Segments</span>", unsafe_allow_html=True)
         st.divider()
 
         st.info("💡 **Navigation:** Use the sidebar above or the module directory below to navigate across all sections.")
