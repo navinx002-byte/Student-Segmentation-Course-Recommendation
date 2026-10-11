@@ -1,7 +1,7 @@
 # 📊 Executive Summary: EduPro Student Personalization & Recommendation Engine
 
 **Audience:** EduPro Executive Leadership, Curriculum Directors, and Product Managers  
-**Prepared by:** Unified Mentor Data Science Internship Team  
+**Prepared by:** Navin D (Data Science Intern, Unified Mentor)  
 **Date:** October 2026  
 **Document Classification:** Internal Strategic Briefing  
 

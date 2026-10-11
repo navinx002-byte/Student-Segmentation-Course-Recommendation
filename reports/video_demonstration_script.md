@@ -2,7 +2,7 @@
 
 **Project Title:** Student Segmentation and Personalized Course Recommendation System for EduPro  
 **Target Duration:** 3 to 5 Minutes  
-**Presenter:** Unified Mentor Data Science Intern  
+**Presenter:** Navin D (Data Science Intern, Unified Mentor)  
 **Target Platform:** YouTube (Unlisted) or Loom / Google Drive (Public Link)
 
 ---

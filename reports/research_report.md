@@ -1,7 +1,7 @@
 # Student Segmentation and Personalized Course Recommendation Using Learner Behavior Analytics: A Case Study of EduPro
 
 **Project Report / Research Manuscript Draft**  
-**Author:** Unified Mentor Data Science Internship Team  
+**Author:** Navin D (Data Science Intern, Unified Mentor)  
 **Institution / Platform:** EduPro Online Learning Platform Research Initiative  
 **Date:** October 2026  
 **Status:** Working Draft (Non-peer-reviewed Capstone Manuscript)
