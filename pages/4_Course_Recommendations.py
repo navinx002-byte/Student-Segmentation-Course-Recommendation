@@ -16,8 +16,10 @@ if str(PROJECT_ROOT) not in sys.path:
 import config
 from src.visualizations import plot_recommendation_score_breakdown
 from src.pipeline import get_active_pipeline
+from src.theme import apply_theme
 
 st.set_page_config(page_title="EduPro | Personalized Recommendations", page_icon="💡", layout="wide")
+apply_theme()
 
 pipeline = get_active_pipeline()
 features_df = pipeline["features"]
@@ -109,20 +111,20 @@ else:
         for idx, rec in enumerate(recommendations, 1):
             score_pct = int(rec["Score"] * 100)
             st.markdown(f"""
-            <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:1.2rem; margin-bottom:1rem; box-shadow:0 1px 2px rgba(0,0,0,0.04);">
+            <div class="course-card">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
-                        <span style="background:#EFF6FF; color:#2563EB; font-weight:700; padding:3px 8px; border-radius:6px; font-size:0.8rem;">#{idx} MATCH ({score_pct}%)</span>
-                        <h4 style="margin:0.4rem 0 0.2rem 0; color:#1E293B;">{rec['CourseName']}</h4>
-                        <div style="font-size:0.85rem; color:#64748B;">
-                            🏷️ <b>{rec['CourseCategory']}</b> &nbsp;|&nbsp; 
-                            📊 Level: <b>{rec['CourseLevel']}</b> &nbsp;|&nbsp; 
-                            🖥️ Type: <b>{rec['CourseType']}</b> &nbsp;|&nbsp; 
-                            ID: <code>{rec['CourseID']}</code>
+                        <span class="match-tag">🔥 #{idx} MATCH • {score_pct}% FIT</span>
+                        <h4 style="margin:0.5rem 0 0.3rem 0; color:#0F172A; font-weight:700;">{rec['CourseName']}</h4>
+                        <div style="font-size:0.85rem; color:#64748B; margin-bottom:0.4rem;">
+                            <span style="background:#EFF6FF; color:#1D4ED8; font-weight:600; padding:2px 8px; border-radius:6px;">🏷️ {rec['CourseCategory']}</span> &nbsp;
+                            <span style="background:#F1F5F9; color:#334155; font-weight:600; padding:2px 8px; border-radius:6px;">📊 {rec['CourseLevel']}</span> &nbsp;
+                            <span style="background:#ECFDF5; color:#047857; font-weight:600; padding:2px 8px; border-radius:6px;">🖥️ {rec['CourseType']}</span> &nbsp;
+                            <span style="color:#94A3B8;">ID: <code>{rec['CourseID']}</code></span>
                         </div>
                     </div>
                 </div>
-                <div style="margin-top:0.6rem; padding-top:0.6rem; border-top:1px dashed #E2E8F0; font-size:0.85rem; color:#059669;">
+                <div style="margin-top:0.6rem; padding-top:0.6rem; border-top:1px dashed #E2E8F0; font-size:0.85rem; color:#059669; font-weight:500;">
                     ✨ <b>Why Recommended:</b> {rec['Explanation']}
                 </div>
             </div>

@@ -17,8 +17,10 @@ if str(PROJECT_ROOT) not in sys.path:
 import config
 from src.visualizations import THEME_LAYOUT
 from src.pipeline import get_active_pipeline
+from src.theme import apply_theme
 
 st.set_page_config(page_title="EduPro | Learner Profile Explorer", page_icon="👤", layout="wide")
+apply_theme()
 
 pipeline = get_active_pipeline()
 features_df = pipeline["features"]
@@ -56,34 +58,34 @@ st.markdown("### Profile Summary")
 p1, p2, p3, p4 = st.columns(4)
 
 p1.markdown(f"""
-<div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:1rem;">
-    <div style="font-size:0.8rem; color:#64748B;">LEARNER IDENTITY</div>
-    <div style="font-size:1.4rem; font-weight:700; color:#1E293B;">{learner.get('UserName', 'Learner')}</div>
-    <div style="font-size:0.85rem; color:#2563EB; font-weight:600;">ID: {learner['UserID']}</div>
+<div class="kpi-card kpi-card-blue">
+    <div class="kpi-title">Learner Identity</div>
+    <div class="kpi-value" style="font-size:1.5rem;">{learner.get('UserName', 'Learner')}</div>
+    <span class="kpi-badge badge-blue">ID: {learner['UserID']}</span>
 </div>
 """, unsafe_allow_html=True)
 
 p2.markdown(f"""
-<div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:1rem;">
-    <div style="font-size:0.8rem; color:#64748B;">ASSIGNED SEGMENT</div>
-    <div style="font-size:1.2rem; font-weight:700; color:#10B981;">{learner.get('PersonaName', 'Unsegmented')}</div>
-    <div style="font-size:0.85rem; color:#64748B;">Cluster #{learner.get('Cluster', 'N/A')}</div>
+<div class="kpi-card kpi-card-emerald">
+    <div class="kpi-title">Assigned Segment</div>
+    <div class="kpi-value" style="font-size:1.25rem; color:#047857;">{learner.get('PersonaName', 'Unsegmented')}</div>
+    <span class="kpi-badge badge-emerald">Cluster #{learner.get('Cluster', 'N/A')}</span>
 </div>
 """, unsafe_allow_html=True)
 
 p3.markdown(f"""
-<div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:1rem;">
-    <div style="font-size:0.8rem; color:#64748B;">DOMAIN SPECIALIZATION</div>
-    <div style="font-size:1.2rem; font-weight:700; color:#F59E0B;">{learner.get('primary_category', 'General')}</div>
-    <div style="font-size:0.85rem; color:#64748B;">Concentration: {int(learner.get('category_concentration', 0)*100)}%</div>
+<div class="kpi-card kpi-card-amber">
+    <div class="kpi-title">Primary Domain</div>
+    <div class="kpi-value" style="font-size:1.35rem; color:#B45309;">{learner.get('primary_category', 'General')}</div>
+    <span class="kpi-badge badge-amber">Focus: {int(learner.get('category_concentration', 0)*100)}%</span>
 </div>
 """, unsafe_allow_html=True)
 
 p4.markdown(f"""
-<div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; padding:1rem;">
-    <div style="font-size:0.8rem; color:#64748B;">LEARNING DEPTH INDEX</div>
-    <div style="font-size:1.4rem; font-weight:700; color:#8B5CF6;">{learner.get('learning_depth_index', 1.0)} / 3.0</div>
-    <div style="font-size:0.85rem; color:#64748B;">Beginner → Advanced</div>
+<div class="kpi-card kpi-card-purple">
+    <div class="kpi-title">Learning Depth</div>
+    <div class="kpi-value" style="font-size:1.5rem; color:#6D28D9;">{learner.get('learning_depth_index', 1.0)} / 3.0</div>
+    <span class="kpi-badge badge-purple">Beginner → Advanced</span>
 </div>
 """, unsafe_allow_html=True)
 

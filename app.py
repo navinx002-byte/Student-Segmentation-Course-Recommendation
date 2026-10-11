@@ -15,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import config
 from src.pipeline import get_active_pipeline
+from src.theme import apply_theme
 
 # Set page configuration
 st.set_page_config(
@@ -24,72 +25,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for polished, production-grade appearance
-st.markdown("""
-<style>
-    /* Global Typography & Spacing */
-    .main-header {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #1E293B;
-        margin-bottom: 0.2rem;
-    }
-    .sub-header {
-        font-size: 1.05rem;
-        color: #64748B;
-        margin-bottom: 1.5rem;
-    }
-    /* Card Styles */
-    .metric-card {
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 12px;
-        padding: 1.2rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: transform 0.15s ease-in-out;
-    }
-    .metric-card:hover {
-        border-color: #2563EB;
-    }
-    .metric-value {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #1E293B;
-    }
-    .metric-label {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #64748B;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    /* Badges */
-    .badge-primary {
-        background-color: #EFF6FF;
-        color: #2563EB;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    .badge-success {
-        background-color: #ECFDF5;
-        color: #059669;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    .badge-amber {
-        background-color: #FFFBEB;
-        color: #D97706;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Apply cohesive modern CSS theme
+apply_theme()
 
 
 def main():
@@ -111,65 +48,80 @@ def main():
         st.markdown(f"🎯 Clusters Active: **{pipeline['segmenter'].k_clusters} Segments**")
         st.divider()
 
-        st.info("💡 **Navigation:** Use the sidebar above or the interactive cards below to navigate across all modules.")
+        st.info("💡 **Navigation:** Use the sidebar above or the module directory below to navigate across all sections.")
 
-    # Home Landing Page Content
-    st.markdown('<div class="main-header">Student Segmentation & Personalized Course Recommendation</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Unified Mentor Internship Capstone Project | Enterprise Educational Data Mining Architecture</div>', unsafe_allow_html=True)
+    # High-impact Hero Header Banner
+    st.markdown("""
+    <div class="hero-banner">
+        <span style="background:rgba(255,255,255,0.2); padding:5px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">
+            ✨ UNIFIED MENTOR INTERNSHIP CAPSTONE
+        </span>
+        <h1 style="margin-top:0.6rem;">Student Segmentation & Course Recommendation</h1>
+        <p>
+            An end-to-end educational data mining system combining unsupervised behavioral clustering (K-Means & PCA)
+            with an explainable, multi-signal course recommendation engine.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # KPI Top Row
+    # Vibrant KPI Cards Row
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-label">Total Learners</div>
-            <div class="metric-value">{len(pipeline['users']):,}</div>
-            <span class="badge-primary">Registered Accounts</span>
+        <div class="kpi-card kpi-card-blue">
+            <div class="kpi-title">Total Learners</div>
+            <div class="kpi-value">{len(pipeline['users']):,}</div>
+            <span class="kpi-badge badge-blue">Registered Accounts</span>
         </div>
         """, unsafe_allow_html=True)
     with col2:
         st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-label">Course Catalog</div>
-            <div class="metric-value">{len(pipeline['courses']):,}</div>
-            <span class="badge-primary">Active Curriculum</span>
+        <div class="kpi-card kpi-card-emerald">
+            <div class="kpi-title">Course Catalog</div>
+            <div class="kpi-value">{len(pipeline['courses']):,}</div>
+            <span class="kpi-badge badge-emerald">Active Curriculum</span>
         </div>
         """, unsafe_allow_html=True)
     with col3:
         st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-label">Total Enrollments</div>
-            <div class="metric-value">{len(pipeline['transactions']):,}</div>
-            <span class="badge-success">Historical Interactions</span>
+        <div class="kpi-card kpi-card-purple">
+            <div class="kpi-title">Total Enrollments</div>
+            <div class="kpi-value">{len(pipeline['transactions']):,}</div>
+            <span class="kpi-badge badge-purple">Historical Events</span>
         </div>
         """, unsafe_allow_html=True)
     with col4:
         avg_enr = round(len(pipeline['transactions']) / max(len(pipeline['users']), 1), 2)
         st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-label">Avg Enrollments / Learner</div>
-            <div class="metric-value">{avg_enr}</div>
-            <span class="badge-amber">Engagement Intensity</span>
+        <div class="kpi-card kpi-card-amber">
+            <div class="kpi-title">Avg Enrollments / Learner</div>
+            <div class="kpi-value">{avg_enr}</div>
+            <span class="kpi-badge badge-amber">Platform Engagement</span>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Core Value Proposition & System Architecture Overview
-    st.markdown("### 📌 Executive Problem Context")
+    # Executive Problem Context in Glass Card
     st.markdown("""
-    EduPro serves a diverse, heterogeneous learner population spanning differing educational goals, career trajectories,
-    prior knowledge levels, and study pacing. Conventional platforms default to uniform, demand-driven recommendations
-    (e.g., surface-level top seller lists), which induces choice overload, mismatches course difficulty, and leaves niche domains underserved.
-    
-    This platform delivers a **bipartite data-driven solution**:
-    1. **Unsupervised Behavioral Segmentation:** Discovers distinct learner archetypes using multi-dimensional engagement, learning depth, and domain specialization vectors (via K-Means Clustering & PCA).
-    2. **Multi-Signal Hybrid Recommendation:** Combines content-based domain affinity, difficulty level calibration, collaborative segment peer trends, and platform baseline popularity with transparent explainability.
-    """)
+    <div class="glass-card">
+        <h3 style="margin-top:0; color:#1E293B;">📌 Executive Problem Context</h3>
+        <p style="color:#475569; font-size:0.95rem; line-height:1.6;">
+            EduPro serves a diverse, heterogeneous learner population spanning differing educational goals, career trajectories,
+            prior knowledge levels, and study pacing. Conventional platforms default to uniform, demand-driven recommendations
+            (e.g., surface-level top seller lists), which induces choice overload, mismatches course difficulty, and leaves niche domains underserved.
+        </p>
+        <p style="color:#475569; font-size:0.95rem; line-height:1.6; margin-bottom:0;">
+            This platform delivers a <b>bipartite data-driven solution</b>:
+            <br>• <b>Unsupervised Behavioral Segmentation:</b> Groups learners into 4 archetypes (via K-Means & PCA) using engagement volume, learning depth, and domain concentration.
+            <br>• <b>Multi-Signal Hybrid Recommendation:</b> Combines category affinity, difficulty level calibration, collaborative segment peer trends, and platform baseline popularity with transparent explainability.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.markdown("---")
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    # Native Streamlit Interactive Page Navigation Links
+    # Interactive Page Navigation Links
     st.markdown("### 🚀 Module Directory")
     st.caption("Click any module below to open it instantly:")
 

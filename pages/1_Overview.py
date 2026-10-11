@@ -17,8 +17,10 @@ if str(PROJECT_ROOT) not in sys.path:
 import config
 from src.visualizations import THEME_LAYOUT, plot_category_distribution
 from src.pipeline import get_active_pipeline
+from src.theme import apply_theme
 
 st.set_page_config(page_title="EduPro | Overview & Data Quality", page_icon="📊", layout="wide")
+apply_theme()
 
 pipeline = get_active_pipeline()
 users_df = pipeline["users"]
@@ -42,10 +44,37 @@ st.markdown("---")
 # High-Level Metric Tiles
 st.subheader("Platform Vital Metrics")
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Registered Learners", f"{len(users_df):,}")
-c2.metric("Curriculum Catalog", f"{len(courses_df):,} Courses")
-c3.metric("Total Enrollments", f"{len(tx_df):,}")
-c4.metric("Date Span", val_report.get("date_range", "N/A"))
+c1.markdown(f"""
+<div class="kpi-card kpi-card-blue">
+    <div class="kpi-title">Registered Learners</div>
+    <div class="kpi-value">{len(users_df):,}</div>
+    <span class="kpi-badge badge-blue">Active Student Base</span>
+</div>
+""", unsafe_allow_html=True)
+
+c2.markdown(f"""
+<div class="kpi-card kpi-card-emerald">
+    <div class="kpi-title">Curriculum Catalog</div>
+    <div class="kpi-value">{len(courses_df):,}</div>
+    <span class="kpi-badge badge-emerald">Available Courses</span>
+</div>
+""", unsafe_allow_html=True)
+
+c3.markdown(f"""
+<div class="kpi-card kpi-card-purple">
+    <div class="kpi-title">Total Enrollments</div>
+    <div class="kpi-value">{len(tx_df):,}</div>
+    <span class="kpi-badge badge-purple">Historical Events</span>
+</div>
+""", unsafe_allow_html=True)
+
+c4.markdown(f"""
+<div class="kpi-card kpi-card-amber">
+    <div class="kpi-title">Date Span</div>
+    <div class="kpi-value" style="font-size:1.4rem;">{val_report.get('date_range', 'N/A')}</div>
+    <span class="kpi-badge badge-amber">Reporting Period</span>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 

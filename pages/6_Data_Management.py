@@ -19,8 +19,10 @@ from src.feature_engineering import engineer_learner_features, get_clustering_fe
 from src.segmentation import StudentSegmenter
 from src.recommender import CourseRecommender
 from src.pipeline import get_active_pipeline, set_active_pipeline
+from src.theme import apply_theme
 
 st.set_page_config(page_title="EduPro | Data Management", page_icon="⚙️", layout="wide")
+apply_theme()
 
 pipeline = get_active_pipeline()
 

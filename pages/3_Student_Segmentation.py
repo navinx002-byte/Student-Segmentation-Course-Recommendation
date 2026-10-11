@@ -21,8 +21,10 @@ from src.visualizations import THEME_LAYOUT, plot_pca_clusters, plot_cluster_rad
 from src.segmentation import evaluate_cluster_range, StudentSegmenter
 from src.feature_engineering import get_clustering_feature_matrix
 from src.pipeline import get_active_pipeline
+from src.theme import apply_theme
 
 st.set_page_config(page_title="EduPro | Student Segmentation", page_icon="🎯", layout="wide")
+apply_theme()
 
 pipeline = get_active_pipeline()
 features_df = pipeline["features"]
@@ -73,26 +75,37 @@ st.subheader("Model Validation & Cluster Quality")
 m_cols = st.columns(4)
 metrics = segmenter.metrics
 
-m_cols[0].metric(
-    "Active Clusters (K)",
-    f"{metrics.get('k_clusters', 4)} Segments",
-    help="Selected number of centroids"
-)
-m_cols[1].metric(
-    "Silhouette Score",
-    f"{metrics.get('silhouette_score', 0):.4f}",
-    help="Range [-1, 1]. Measures cohesion vs separation. Higher is better."
-)
-m_cols[2].metric(
-    "Davies-Bouldin Index",
-    f"{metrics.get('davies_bouldin_index', 0):.3f}",
-    help="Measures average similarity of each cluster with its most similar cluster. Lower is better."
-)
-m_cols[3].metric(
-    "Calinski-Harabasz Score",
-    f"{metrics.get('calinski_harabasz_score', 0):,.1f}",
-    help="Variance ratio criterion. Higher indicates denser and well-separated clusters."
-)
+m_cols[0].markdown(f"""
+<div class="kpi-card kpi-card-blue">
+    <div class="kpi-title">Active Clusters (K)</div>
+    <div class="kpi-value">{metrics.get('k_clusters', 4)}</div>
+    <span class="kpi-badge badge-blue">Optimal Partitions</span>
+</div>
+""", unsafe_allow_html=True)
+
+m_cols[1].markdown(f"""
+<div class="kpi-card kpi-card-emerald">
+    <div class="kpi-title">Silhouette Score</div>
+    <div class="kpi-value">{metrics.get('silhouette_score', 0):.4f}</div>
+    <span class="kpi-badge badge-emerald">Cohesion vs Separation</span>
+</div>
+""", unsafe_allow_html=True)
+
+m_cols[2].markdown(f"""
+<div class="kpi-card kpi-card-amber">
+    <div class="kpi-title">Davies-Bouldin Index</div>
+    <div class="kpi-value">{metrics.get('davies_bouldin_index', 0):.3f}</div>
+    <span class="kpi-badge badge-amber">Cluster Separation</span>
+</div>
+""", unsafe_allow_html=True)
+
+m_cols[3].markdown(f"""
+<div class="kpi-card kpi-card-purple">
+    <div class="kpi-title">Calinski-Harabasz</div>
+    <div class="kpi-value" style="font-size:1.6rem;">{metrics.get('calinski_harabasz_score', 0):,.1f}</div>
+    <span class="kpi-badge badge-purple">Variance Ratio Score</span>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 

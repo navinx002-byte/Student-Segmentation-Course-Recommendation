@@ -17,8 +17,10 @@ if str(PROJECT_ROOT) not in sys.path:
 import config
 from src.visualizations import THEME_LAYOUT, plot_category_distribution
 from src.pipeline import get_active_pipeline
+from src.theme import apply_theme
 
 st.set_page_config(page_title="EduPro | Analytics & Business Insights", page_icon="📈", layout="wide")
+apply_theme()
 
 pipeline = get_active_pipeline()
 features_df = pipeline["features"]
