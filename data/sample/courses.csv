@@ -1,0 +1,51 @@
+CourseID,CourseName,CourseCategory,CourseType,CourseLevel
+C001,Python for Data Science and Machine Learning,Technology,Paid,Intermediate
+C002,"Complete Web Development Bootcamp: HTML, CSS, JavaScript",Technology,Paid,Beginner
+C003,Introduction to Python Programming,Technology,Free,Beginner
+C004,Cloud Computing Essentials with AWS,Technology,Free,Beginner
+C005,Deep Learning with PyTorch and TensorFlow,Technology,Paid,Advanced
+C006,Cybersecurity Fundamentals & Ethical Hacking,Technology,Paid,Beginner
+C007,Mobile App Development with Flutter & Dart,Technology,Paid,Intermediate
+C008,DevOps & CI/CD Pipelines with Docker and Kubernetes,Technology,Paid,Advanced
+C009,Relational Database Design and SQL Mastery,Technology,Free,Beginner
+C010,Artificial Intelligence Architecture & System Design,Technology,Paid,Advanced
+C011,Financial Modeling & Corporate Valuation in Excel,Business,Paid,Intermediate
+C012,Digital Marketing Strategy & SEO Fundamentals,Business,Free,Beginner
+C013,Project Management Principles & Agile Methodologies,Business,Free,Beginner
+C014,Entrepreneurship: From Idea Validation to Launch,Business,Paid,Beginner
+C015,Strategic Management and Global Corporate Leadership,Business,Paid,Advanced
+C016,Professional Scrum Master (PSM) Certification Prep,Business,Paid,Intermediate
+C017,Product Management: From Discovery to Market Fit,Business,Paid,Intermediate
+C018,Global Supply Chain Logistics and Procurement,Business,Paid,Intermediate
+C019,Introduction to Astronomy & Planetary Exploration,Science,Free,Beginner
+C020,"General Chemistry: Atoms, Reactions, and Stoichiometry",Science,Paid,Beginner
+C021,"Genetics, Genomics, and Modern Biotechnology",Science,Paid,Intermediate
+C022,"Environmental Science, Renewable Energy & Sustainability",Science,Free,Beginner
+C023,Quantum Physics Principles & Modern Mechanics,Science,Paid,Advanced
+C024,Cognitive Neuroscience: Unraveling the Brain,Science,Paid,Intermediate
+C025,"Graphic Design Masterclass: Photoshop, Illustrator, InDesign",Arts,Paid,Beginner
+C026,"Digital Photography: Composition, Lighting, and Exposure",Arts,Free,Beginner
+C027,UI/UX Design Essentials: Wireframing and Prototyping in Figma,Arts,Paid,Beginner
+C028,"Music Theory, Harmony, and Contemporary Songwriting",Arts,Free,Beginner
+C029,Digital Painting and Character Concept Art,Arts,Paid,Intermediate
+C030,Screenwriting & Narrative Storytelling for Film and Media,Arts,Paid,Intermediate
+C031,"Nutritional Science, Metabolism, and Dietary Wellness",Health,Free,Beginner
+C032,"Foundations of Mental Health, Stress Resilience & Mindfulness",Health,Free,Beginner
+C033,"Human Anatomy, Physiology, and Biomechanics",Health,Paid,Intermediate
+C034,"Public Health Policy, Epidemiology, and Disease Control",Health,Paid,Intermediate
+C035,Strength Conditioning & Exercise Physiology,Health,Paid,Beginner
+C036,"Linear Algebra, Vectors, and Matrices for Machine Learning",Mathematics,Paid,Intermediate
+C037,"Calculus I: Limits, Derivatives, and Applications",Mathematics,Free,Beginner
+C038,Probability and Applied Statistics for Data Analysis,Mathematics,Free,Beginner
+C039,Discrete Mathematics for Computer Science & Cryptography,Mathematics,Paid,Intermediate
+C040,Multivariable Calculus and Partial Differential Equations,Mathematics,Paid,Advanced
+C041,Spanish for Beginners: Practical Conversational Fluency,Language,Free,Beginner
+C042,Intermediate Spanish: Grammar Mastery & Cultural Context,Language,Paid,Intermediate
+C043,Business English: International Negotiations & Presentations,Language,Paid,Intermediate
+C044,French Language & Culture for Beginners,Language,Free,Beginner
+C045,"Japanese Foundations: Hiragana, Katakana, and Essential Kanji",Language,Paid,Beginner
+C046,High-Performance Time Management and Deep Work Habits,Personal Development,Free,Beginner
+C047,Mastering Public Speaking & Executive Presence,Personal Development,Paid,Beginner
+C048,"Critical Thinking, Logic, and Creative Problem Solving",Personal Development,Free,Beginner
+C049,"Emotional Intelligence, Empathy & High-Trust Relationships",Personal Development,Paid,Intermediate
+C050,"Strategic Career Navigation, Mentorship & Salary Negotiation",Personal Development,Paid,Advanced
