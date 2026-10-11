@@ -16,14 +16,11 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import config
 from src.visualizations import THEME_LAYOUT
+from src.pipeline import get_active_pipeline
 
 st.set_page_config(page_title="EduPro | Learner Profile Explorer", page_icon="👤", layout="wide")
 
-if "pipeline" not in st.session_state:
-    st.warning("⚠️ Session uninitialized. Please return to the Home page to initialize the pipeline.")
-    st.stop()
-
-pipeline = st.session_state.pipeline
+pipeline = get_active_pipeline()
 features_df = pipeline["features"]
 courses_df = pipeline["courses"]
 tx_df = pipeline["transactions"]

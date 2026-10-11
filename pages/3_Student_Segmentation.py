@@ -20,14 +20,11 @@ import config
 from src.visualizations import THEME_LAYOUT, plot_pca_clusters, plot_cluster_radar
 from src.segmentation import evaluate_cluster_range, StudentSegmenter
 from src.feature_engineering import get_clustering_feature_matrix
+from src.pipeline import get_active_pipeline
 
 st.set_page_config(page_title="EduPro | Student Segmentation", page_icon="🎯", layout="wide")
 
-if "pipeline" not in st.session_state:
-    st.warning("⚠️ Session uninitialized. Please return to the Home page to initialize the pipeline.")
-    st.stop()
-
-pipeline = st.session_state.pipeline
+pipeline = get_active_pipeline()
 features_df = pipeline["features"]
 segmenter = pipeline["segmenter"]
 pca_coords = pipeline["pca_coords"]

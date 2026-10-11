@@ -4,7 +4,6 @@ Main Streamlit Application Entrypoint.
 """
 
 import sys
-import os
 from pathlib import Path
 import streamlit as st
 import pandas as pd
@@ -15,10 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import config
-from src.data_loader import EduProDataLoader
-from src.feature_engineering import engineer_learner_features, get_clustering_feature_matrix
-from src.segmentation import StudentSegmenter
-from src.recommender import CourseRecommender
+from src.pipeline import get_active_pipeline
 
 # Set page configuration
 st.set_page_config(
@@ -92,69 +88,13 @@ st.markdown("""
         font-size: 0.8rem;
         font-weight: 600;
     }
-    /* Info Callout */
-    .custom-callout {
-        background-color: #F8FAFC;
-        border-left: 4px solid #2563EB;
-        padding: 1rem 1.2rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
-        color: #334155;
-    }
 </style>
 """, unsafe_allow_html=True)
 
 
-@st.cache_resource(show_spinner="Initializing EduPro Analytics Engine...")
-def init_system(excel_path: Path):
-    """Loads default dataset, computes features, fits segmentation and recommender."""
-    loader = EduProDataLoader()
-    if excel_path.exists():
-        u_df, c_df, t_df = loader.load_from_excel(excel_path)
-    else:
-        # Fallback to CSV files
-        u_df, c_df, t_df = loader.load_from_csv_files(
-            config.DEFAULT_USERS_CSV,
-            config.DEFAULT_COURSES_CSV,
-            config.DEFAULT_TRANSACTIONS_CSV
-        )
-
-    # 1. Feature Engineering
-    features_df = engineer_learner_features(u_df, c_df, t_df)
-
-    # 2. Fit Student Segmentation (K-Means)
-    clust_X, feat_cols = get_clustering_feature_matrix(features_df)
-    segmenter = StudentSegmenter(k_clusters=config.DEFAULT_K_CLUSTERS, random_state=config.RANDOM_STATE)
-    labels, pca_coords = segmenter.fit_predict(clust_X, feat_cols)
-
-    # Map cluster persona back to features_df
-    features_df["Cluster"] = -1
-    features_df["PersonaName"] = "Unsegmented"
-    enrolled_idx = features_df[features_df["total_enrollments"] > 0].index
-    features_df.loc[enrolled_idx, "Cluster"] = labels
-    features_df.loc[enrolled_idx, "PersonaName"] = [segmenter.get_cluster_name(c) for c in labels]
-
-    # 3. Initialize Recommender
-    recommender = CourseRecommender(c_df, t_df, features_df)
-
-    return {
-        "loader": loader,
-        "users": u_df,
-        "courses": c_df,
-        "transactions": t_df,
-        "features": features_df,
-        "segmenter": segmenter,
-        "pca_coords": pca_coords,
-        "recommender": recommender
-    }
-
-
 def main():
-    # Initialize session state
-    if "pipeline" not in st.session_state:
-        st.session_state.pipeline = init_system(config.DEFAULT_EXCEL_PATH)
-
-    pipeline = st.session_state.pipeline
+    # Automatically get or initialize the active pipeline
+    pipeline = get_active_pipeline()
 
     # Sidebar Header & Quick Controls
     with st.sidebar:
@@ -164,14 +104,14 @@ def main():
         st.divider()
 
         st.markdown("**System Status**")
-        st.markdown(f"📦 Data Source: `{pipeline['loader'].data_source_type}`")
+        st.markdown(f"📦 Source: `{pipeline['loader'].data_source_type}`")
         st.markdown(f"👥 Active Learners: **{len(pipeline['users']):,}**")
         st.markdown(f"📚 Available Courses: **{len(pipeline['courses']):,}**")
         st.markdown(f"📝 Total Enrollments: **{len(pipeline['transactions']):,}**")
         st.markdown(f"🎯 Clusters Active: **{pipeline['segmenter'].k_clusters} Segments**")
         st.divider()
 
-        st.info("💡 **Navigation:** Use the left sidebar pages above to explore segments, test real-time course recommendations, inspect analytics, or upload custom datasets.")
+        st.info("💡 **Navigation:** Use the sidebar above or the interactive cards below to navigate across all modules.")
 
     # Home Landing Page Content
     st.markdown('<div class="main-header">Student Segmentation & Personalized Course Recommendation</div>', unsafe_allow_html=True)
@@ -229,51 +169,35 @@ def main():
 
     st.markdown("---")
 
-    # Interactive Navigation Cards
+    # Native Streamlit Interactive Page Navigation Links
     st.markdown("### 🚀 Module Directory")
+    st.caption("Click any module below to open it instantly:")
+
     c1, c2, c3 = st.columns(3)
 
     with c1:
-        st.markdown("""
-        #### 1. 📊 [Overview & Data Quality](Overview)
-        - Data dictionary and schema audit
-        - Missing value and duplicate checks
-        - Global enrollment cadence and demographics
-        """)
-        st.markdown("""
-        #### 2. 👤 [Learner Profile Explorer](Learner_Explorer)
-        - Individual student dossier lookup
-        - Behavioral engagement metrics
-        - Dynamic persona badge and trajectory summary
-        """)
+        st.page_link("pages/1_Overview.py", label="1. 📊 Overview & Data Quality", icon="📊")
+        st.caption("• Data dictionary, schema audit, and demographic distributions.")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.page_link("pages/2_Learner_Explorer.py", label="2. 👤 Learner Profile Explorer", icon="👤")
+        st.caption("• Search individual students, view behavioral metrics and assigned archetypes.")
 
     with c2:
-        st.markdown("""
-        #### 3. 🎯 [Student Segmentation](Student_Segmentation)
-        - Interactive 2D PCA cluster projection
-        - Radar spider-chart of segment dimensions
-        - Elbow & Silhouette mathematical validation
-        """)
-        st.markdown("""
-        #### 4. 💡 [Course Recommendations](Course_Recommendations)
-        - Live, student-centric Top-5 course recommender
-        - Signal attribution waterfall charts
-        - Real-time filters and cold-start support
-        """)
+        st.page_link("pages/3_Student_Segmentation.py", label="3. 🎯 Student Segmentation", icon="🎯")
+        st.caption("• Interactive 2D PCA cluster projection, radar profiles, and validation metrics.")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.page_link("pages/4_Course_Recommendations.py", label="4. 💡 Course Recommendations", icon="💡")
+        st.caption("• Real-time Top-5 recommendations, signal attribution charts, and filters.")
 
     with c3:
-        st.markdown("""
-        #### 5. 📈 [Analytics & Business Insights](Analytics)
-        - Course popularity and demand-supply gap
-        - Learning depth distribution across domains
-        - Actionable stakeholder recommendations
-        """)
-        st.markdown("""
-        #### 6. ⚙️ [Data Management](Data_Management)
-        - Upload custom CSV or Excel datasets
-        - Live schema validation & orphan record audit
-        - Export clean feature tables and segment maps
-        """)
+        st.page_link("pages/5_Analytics.py", label="5. 📈 Analytics & Insights", icon="📈")
+        st.caption("• Course popularity rankings, category demand-supply analysis, and strategic advice.")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.page_link("pages/6_Data_Management.py", label="6. ⚙️ Data Management & Upload", icon="⚙️")
+        st.caption("• Upload custom CSV or Excel datasets, audit schema, and export cleaned tables.")
 
 
 if __name__ == "__main__":

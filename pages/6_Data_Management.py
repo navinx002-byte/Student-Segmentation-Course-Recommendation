@@ -18,14 +18,11 @@ from src.data_loader import EduProDataLoader
 from src.feature_engineering import engineer_learner_features, get_clustering_feature_matrix
 from src.segmentation import StudentSegmenter
 from src.recommender import CourseRecommender
+from src.pipeline import get_active_pipeline, set_active_pipeline
 
 st.set_page_config(page_title="EduPro | Data Management", page_icon="⚙️", layout="wide")
 
-if "pipeline" not in st.session_state:
-    st.warning("⚠️ Session uninitialized. Please return to the Home page to initialize the pipeline.")
-    st.stop()
-
-pipeline = st.session_state.pipeline
+pipeline = get_active_pipeline()
 
 st.title("⚙️ Data Management & Ingestion Gateway")
 st.markdown("Safely ingest, validate, preprocess, and export EduPro datasets or test external schemas.")
@@ -157,7 +154,7 @@ with tab_reset:
     st.subheader("Reset Environment")
     st.markdown("Revert all loaded datasets, models, and states back to the original default sample data:")
     if st.button("🔄 Reset to Default Sample Dataset", type="secondary"):
-        from app import init_system
-        st.session_state.pipeline = init_system(config.DEFAULT_EXCEL_PATH)
+        from src.pipeline import get_default_pipeline
+        st.session_state.pipeline = get_default_pipeline()
         st.success("System reset to default EduPro demonstration dataset.")
         st.rerun()
